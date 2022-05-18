@@ -1,15 +1,13 @@
-const { Pool } = require("pg");
-const { DB } = require("../config")
+import { Pool } from 'pg';
+import { vals } from '../config'
 
 
 const pool = new Pool({
-    user: DB.PGUSER,
-    host: DB.PGHOST,
-    database: DB.PGDATABASE,
-    password: DB.PGPASSWORD,
-    port: DB.PGPORT
+    host: vals.DB.PGHOST,
+    user: vals.DB.PGUSER,
+    database: 'dive_store',
+    password: vals.DB.PGPASSWORD,
+    port: 5432
 });
 
-module.exports = {
-    query: (text, params) => pool.query(text, params)
-};
+export const query = (text?: any, params?: any[]) => pool.query(text, params)

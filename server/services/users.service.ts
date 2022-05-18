@@ -1,16 +1,32 @@
-const db = require('../models');
+import { query } from '../models'
+
+type User = {
+    first_name: string,
+    last_name: string,
+    username: string,
+    address1: string,
+    address2: string,
+    postcode: string,
+    city: string
+}
 
 const getUsers = async () => {
-    const { rows: users } = await db.query(`SELECT * FROM USERS`);
+    const { rows: users } = await query(`SELECT * FROM users`);
     return users;
 };
 
-const newUser = async (username: string, password: string) => {
-    db.query(`INSERT INTO users(username, password_hash) VALUES ($1, $2)`, [username, password])
+const getCurrentUser = async (id: string) => {
+    const { rows: user } = await query(`SELECT * FROM users WHERE id = $1`, [id])
+    return user[0]
 }
 
-const updateUser = async (user) => {
-    db.query(`UPDATE users (
+const newUser = async (username: string, password: string) => {
+    const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2)`, [username, password])
+    return user[0]
+}
+
+const updateUser = async (user: User) => {
+    const { rows: updatedUser } = await query(`UPDATE users (
         first_name,
         last_name,
         username,
@@ -29,8 +45,18 @@ const updateUser = async (user) => {
         user.postcode,
         user.city
     ])
+    return updatedUser
 };
 
-const deleteUser = async (id) => {
-    db.query(`DELETE FROM users WHERE id = $1`, [id])
+const deleteUser = async (id: number) => {
+    const { rows: user } = await query(`DELETE FROM users WHERE id = $1 RETURNING *`, [id])
+    return user[0]
+};
+
+export const userService = {
+    getUsers,
+    getCurrentUser,
+    newUser,
+    updateUser,
+    deleteUser
 }

@@ -1,8 +1,8 @@
-module.exports = {
+export const vals = {
     PORT: process.env.PORT,
     DB: {
-        PGHOST: process.env.PGHOST,
         PGUSER: process.env.PGUSER,
+        PGHOST: process.env.PGHOST,
         PGDATABASE: process.env.PGDATABASE,
         PGPASSWORD: process.env.PGPASSWORD,
         PGPORT: process.env.PGPORT

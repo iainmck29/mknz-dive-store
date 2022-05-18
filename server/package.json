@@ -5,12 +5,20 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.ts"
   },
   "author": "Iain McKenzie",
   "license": "ISC",
   "dependencies": {
+    "@types/pg": "^8.6.5",
     "express": "^4.18.1",
     "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.34",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.6.4"
   }
 }
