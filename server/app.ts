@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
+import errorhandler from 'errorhandler'
 import { getUsers } from './controllers';
 import { router } from './routes'
 
@@ -8,7 +9,7 @@ const app: Application = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-
+app.use(errorhandler());
 app.use(bodyParser.urlencoded({
     extended: true
 }));

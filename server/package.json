@@ -11,7 +11,11 @@
   "author": "Iain McKenzie",
   "license": "ISC",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/errorhandler": "^1.5.0",
     "@types/pg": "^8.6.5",
+    "dotenv": "^16.0.1",
+    "errorhandler": "^1.5.1",
     "express": "^4.18.1",
     "pg": "^8.7.3"
   },

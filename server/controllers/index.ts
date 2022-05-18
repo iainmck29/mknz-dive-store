@@ -1,7 +1,9 @@
-import { getUsers, getCurrentUser, newUser } from "./users.controller";
+import { getUsers, getCurrentUser, newUser, updateUser, deleteUser } from "./users.controller";
 
 export {
     getUsers,
     getCurrentUser,
-    newUser
+    newUser,
+    updateUser,
+    deleteUser
 }

@@ -25,7 +25,7 @@ const newUser = async (username: string, password: string) => {
     return user[0]
 }
 
-const updateUser = async (user: User) => {
+const updateUser = async (user: User, id: string) => {
     const { rows: updatedUser } = await query(`UPDATE users (
         first_name,
         last_name,
@@ -36,7 +36,7 @@ const updateUser = async (user: User) => {
         city
     ) VALUES (
         $1, $2, $3, $4, $5, $6, $7
-    )`, [
+    ) WHERE id = $8`, [
         user.first_name,
         user.last_name,
         user.username,
@@ -48,7 +48,7 @@ const updateUser = async (user: User) => {
     return updatedUser
 };
 
-const deleteUser = async (id: number) => {
+const deleteUser = async (id: string) => {
     const { rows: user } = await query(`DELETE FROM users WHERE id = $1 RETURNING *`, [id])
     return user[0]
 };
