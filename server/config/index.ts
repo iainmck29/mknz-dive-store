@@ -1,6 +1,4 @@
-import dotenv from 'dotenv'
 
-dotenv.config()
 
 export const vals = {
     PORT: process.env.PORT,

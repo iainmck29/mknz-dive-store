@@ -1,9 +1,7 @@
-import { getUsers, getCurrentUser, newUser, updateUser, deleteUser } from "./users.controller";
+import { users } from "./users.controller";
+import { merchants } from "./merchant.controller";
 
 export {
-    getUsers,
-    getCurrentUser,
-    newUser,
-    updateUser,
-    deleteUser
+    users,
+    merchants,
 }

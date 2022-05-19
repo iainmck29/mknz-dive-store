@@ -1,5 +1,6 @@
-import {userService} from './users.service';
-
+import { userService } from './users.service';
+import { merchantService } from './merchants.service';
 export {
-    userService
+    userService,
+    merchantService
 }

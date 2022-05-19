@@ -1,11 +1,12 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express from 'express';
+import 'dotenv/config';
 import bodyParser from 'body-parser';
 import errorhandler from 'errorhandler'
-import { getUsers } from './controllers';
 import { router } from './routes'
 
 
-const app: Application = express();
+
+const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
@@ -16,9 +17,6 @@ app.use(bodyParser.urlencoded({
 
 app.use('/api', router)
 
-app.get('/', (req, res, next) => {
-    res.send('hello world')
-})
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)

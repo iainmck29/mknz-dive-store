@@ -1,6 +1,7 @@
 import { query } from '../models'
 
 type User = {
+    id: string,
     first_name: string,
     last_name: string,
     username: string,
@@ -25,7 +26,8 @@ const newUser = async (username: string, password: string) => {
     return user[0]
 }
 
-const updateUser = async (user: User, id: string) => {
+const updateUser = async (user: User) => {
+    const { first_name, last_name, username, address1, address2, postcode, city, id } = user;
     const { rows: updatedUser } = await query(`UPDATE users (
         first_name,
         last_name,
@@ -37,13 +39,14 @@ const updateUser = async (user: User, id: string) => {
     ) VALUES (
         $1, $2, $3, $4, $5, $6, $7
     ) WHERE id = $8`, [
-        user.first_name,
-        user.last_name,
-        user.username,
-        user.address1,
-        user.address2,
-        user.postcode,
-        user.city
+        first_name,
+        last_name,
+        username,
+        address1,
+        address2,
+        postcode,
+        city,
+        id
     ])
     return updatedUser
 };
