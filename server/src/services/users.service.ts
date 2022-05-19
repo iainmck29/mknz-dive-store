@@ -22,23 +22,22 @@ const getCurrentUser = async (id: string) => {
 }
 
 const newUser = async (username: string, password: string) => {
-    const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2)`, [username, password])
+    const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2) RETURNING *`, [username, password])
     return user[0]
 }
 
 const updateUser = async (user: User) => {
     const { first_name, last_name, username, address1, address2, postcode, city, id } = user;
-    const { rows: updatedUser } = await query(`UPDATE users (
-        first_name,
-        last_name,
-        username,
-        address1,
-        address2,
-        postcode,
-        city
-    ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7
-    ) WHERE id = $8`, [
+    const { rows: updatedUser } = await query(`UPDATE users SET
+        first_name = $1,
+        last_name = $2,
+        username = $3,
+        address1 = $4,
+        address2 = $5,
+        postcode = $6,
+        city = $7
+        WHERE id = $8
+        RETURNING *`, [
         first_name,
         last_name,
         username,

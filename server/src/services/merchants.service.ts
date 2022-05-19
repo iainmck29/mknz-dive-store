@@ -8,40 +8,34 @@ type Merchant = {
 };
 
 const getMerchants = async () => {
-    const { rows: merchants } = await query(`SELECT * FROM merchants`);
-    return merchants;
+    const { rows } = await query(`SELECT * FROM merchants`);
+    return rows;
 };
 
 const getMerchantById = async (id: string) => {
-    const { rows: merchant } = await query(`SELECT * FROM merchants WHERE id = $1`, [id])
-    return merchant[0]
+    const { rows } = await query(`SELECT * FROM merchants WHERE id = $1`, [id])
+    return rows[0]
 };
 
 const createMerchant = async (name: string, description: string, email: string) => {
-    const { rows: merchant } = await query(`INSERT INTO merchants(name, description, email) VALUES $1, $2, $3`, [name, description, email]);
-    return merchant;
+    const { rows } = await query(`INSERT INTO merchants(name, description, email) VALUES ($1, $2, $3) RETURNING *`, [name, description, email]);
+    return rows[0];
 };
 
 const updateMerchant = async (updatedMerchant: Merchant) => {
     const { name, description, email, id } = updatedMerchant
-    const { rows: merchant } = await query(` UPDATE merchants (
-        name,
-        description,
-        email
-    ) VALUES (
-        $1, $2, $3
-    ) WHERE id = $4`, [
+    const { rows } = await query(` UPDATE merchants SET name = $1, description = $2, email = $3WHERE id = $4 RETURNING *`, [
         name,
         description,
         email,
         id
     ])
-    return merchant;
+    return rows[0];
 };
 
 const deleteMerchant = async (id: string) => {
-    const { rows: merchant } = await query(`DELETE FROM merchants WHERE id = $1 RETURNING *`, [id])
-    return merchant;
+    const { rows } = await query(`DELETE FROM merchants WHERE id = $1 RETURNING *`, [id])
+    return rows[0];
 };
 
 export const merchantService = {
