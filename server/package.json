@@ -12,12 +12,18 @@
   "author": "Iain McKenzie",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/dotenv": "^8.2.0",
     "@types/errorhandler": "^1.5.0",
+    "@types/passport": "^1.0.7",
+    "@types/passport-local": "^1.0.34",
     "@types/pg": "^8.6.5",
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "errorhandler": "^1.5.1",
     "express": "^4.18.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.7.3"
   },
   "devDependencies": {

@@ -21,6 +21,11 @@ const getCurrentUser = async (id: string) => {
     return user[0]
 }
 
+const getUserByUsername = async (username: string) => {
+    const { rows: user } = await query(`SELECT * FROM users WHERE username = $1`, [username]);
+    return user;
+}
+
 const newUser = async (username: string, password: string) => {
     const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2) RETURNING *`, [username, password])
     return user[0]
@@ -60,5 +65,6 @@ export const userService = {
     getCurrentUser,
     newUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserByUsername
 }
