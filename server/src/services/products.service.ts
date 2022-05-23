@@ -7,6 +7,17 @@ type Product = {
     price: number
 };
 
+enum Category {
+    'mask_snorkel',
+    'wetsuit',
+    'bcd',
+    'regulator',
+    'fins',
+    'computer',
+    'accessories',
+    'essentials'
+};
+
 const getProducts = async () => {
     const { rows } = await query(`SELECT * FROM products`);
     return rows;
@@ -24,9 +35,19 @@ const createProduct = async (product: Product) => {
         price
     ) VALUES (
         $1, $2, $3
-    ) RETURNING *`, [merchant_id, description, price]);
+    ) RETURNING id`, [merchant_id, description, price]);
     return rows[0];
 };
+
+const addToCategories = async (product_id: string, category: Category) => {
+    const { rows } = await query(`INSERT INTO products_categories (
+        product_id,
+        category
+    ) VALUES (
+        $1, $2
+    )`, [product_id, category])
+    return rows[0];
+}
 
 const updateProduct = async (product: Product, id: string) => {
     const { merchant_id, description, price } = product;
@@ -48,6 +69,7 @@ export const productService = {
     getProducts,
     getProductById,
     createProduct,
+    addToCategories,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 };

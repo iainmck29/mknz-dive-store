@@ -4,7 +4,6 @@ type OrderedProduct = {
     order_id: number,
     product_id: number,
     quantity: number,
-    total_cost: number
 }
 
 type Order = {
@@ -46,26 +45,29 @@ const addProductsToOrder = async (order: OrderedProduct) => {
     return rows[0]
 };
 
-const updateCostInOrders = async (updateValue: number) => {
+const updatePriceInOrders = async (updateValue: number) => {
     const { rows } = await query(`UPDATE orders SET total_cost = $1 RETURNING *`, [updateValue]);
     return rows[0];
 };
 
-const updateStatusInOrders = async (updateValue: string) => {
-    const { rows } = await query(`UPDATE orders SET status = $1 RETURNING *`, [updateValue]);
+const updateStatusInOrders = async (updateValue: string, order_id: number) => {
+    const { rows } = await query(`UPDATE orders SET status = $1 WHERE id = $2 RETURNING *`, [updateValue, order_id]);
     return rows[0];
 };
 
-const updateProductQuantity = async (updateValue: number) => {
-    const { rows } = await query(`UPDATE orders_products SET quantity = $1 RETURNING *`, [updateValue]);
+
+const updateProductQuantity = async (updateObject: OrderedProduct) => {
+    const { quantity, product_id, order_id } = updateObject
+    const { rows } = await query(`UPDATE orders_products SET quantity = $1 WHERE order_id = $2 AND product_id = $3 RETURNING *`, [quantity, order_id, product_id]);
     return rows[0];
 };
 
 const deleteOrderInOrders = async (id: string) => {
     const { rows } = await query(`DELETE FROM orders WHERE id = $1 RETURNING order_id`, [id]);
+    return rows[0]
 };
 
-const deleteFromOrdersProducts = async (order_id: number) => {
+const deleteFromOrdersProducts = async (order_id: string) => {
     const { rows } = await query(`DELETE FROM orders_products WHERE order_id = $1 RETURNING *`, [order_id]);
     return rows;
 };
@@ -75,7 +77,7 @@ export const orderService = {
     getOrderById,
     addOrderToOrders,
     addProductsToOrder,
-    updateCostInOrders,
+    updatePriceInOrders,
     updateStatusInOrders,
     updateProductQuantity,
     deleteOrderInOrders,
