@@ -1,5 +1,6 @@
 import { cartService } from "../services";
-import { Request, Response } from "express";
+import { query, Request, Response } from "express";
+import { calculateTotalCost } from "../utils/helpers";
 
 const getCartById = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -13,9 +14,36 @@ const createCart = async (req: Request, res: Response) => {
     return res.status(200).json(result);
 };
 
-const updateCart = async(req: Request, res: Response) => {
+const addToCart = async (req: Request, res: Response) => {
     const { productID, quantity, cartID } = req.body;
-    const result = await cartService.updateCart({productID, quantity, cartID});
+    const checkCart = await cartService.checkProductInCart(productID, cartID)
+    if (checkCart) {
+        const result = await cartService.updateCart({productID, quantity, cartID})
+        return res.status(200).json(result)
+    } else {
+        const result = await cartService.addToCart({productID, quantity, cartID})
+        return res.status(200).json(result);
+    }
+    
+}
+
+const updateCartTotal = async (req: Request, res: Response) => {
+    const { cartID } = req.body;
+    const products = await cartService.getCartProducts(cartID);
+    //@ts-ignore
+    const total = calculateTotalCost(products);
+    const result = await cartService.updateCartTotal(total, cartID);
+    return result;
+}
+
+const updateCart = async(req: Request, res: Response) => {
+    const { products, cartID } = req.body;
+    // for await (const product of products) {
+        // @ts-ignore
+        const { productID, quantity } = product
+        const result = await cartService.updateCart({productID, quantity, cartID});
+    // }
+
     return res.status(200).json(result);
 };
 
@@ -25,9 +53,13 @@ const deleteCart = async (req: Request, res: Response) => {
     return res.status(200).json(result);
 };
 
+
+
 export const carts = {
     getCartById,
     createCart,
     updateCart,
-    deleteCart
+    deleteCart,
+    updateCartTotal,
+    addToCart
 };

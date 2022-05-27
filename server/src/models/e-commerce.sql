@@ -51,7 +51,8 @@ CREATE TABLE orders_products (
 
 CREATE TABLE cart (
     id SERIAL PRIMARY KEY,
-    user_id integer DEFAULT NULL
+    user_id integer DEFAULT NULL,
+    total money DEFAULT 0.00
 );
 
 CREATE TABLE cart_products (

@@ -1,6 +1,6 @@
 import { query } from '../models'
 
-type User = {
+type UpdatedUser = {
     id: string,
     first_name: string,
     last_name: string,
@@ -27,11 +27,16 @@ const getUserByUsername = async (username: string) => {
 }
 
 const newUser = async (username: string, password: string) => {
+    try {
     const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2) RETURNING *`, [username, password])
-    return user[0]
-}
+    return user;
+    } catch(err) {
+        console.log('failing here')
+        console.log(err)
+    }
+};
 
-const updateUser = async (user: User) => {
+const updateUser = async (user: UpdatedUser) => {
     const { first_name, last_name, username, address1, address2, postcode, city, id } = user;
     const { rows: updatedUser } = await query(`UPDATE users SET
         first_name = $1,

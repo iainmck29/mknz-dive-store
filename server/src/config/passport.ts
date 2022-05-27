@@ -1,11 +1,13 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import { userService } from "../services";
 import bcrypt from "bcrypt";
 import { comparePassword } from "../utils/helpers";
 
 
-passport.use(new LocalStrategy({
+passport.use(
+    new LocalStrategy({
     usernameField: "username",
     passwordField: "password"
 },
@@ -14,11 +16,34 @@ async (username, password, done) => {
     if (!user) {
         return done(null, false, { message: "User not found"})
     }
-
-    if (!comparePassword) {
+    //@ts-ignore
+    if (!comparePassword(password, user.password)) {
         return done(null, false, { message: " Incorrect password" });
     }
 
     return done(null, user, {message: "success"})
 }
-))
+));
+
+passport.use(
+    'jwt-customer',
+    new JWTStrategy({
+        secretOrKey: 'nf183yfnap9v9dfnqiov',
+        jwtFromRequest: ExtractJwt.fromExtractors([
+            (req) => {
+                let token = null;
+                if (req && req.cookies) {
+                    token = req.cookies['A_JWT'];
+                }
+                return token;
+            }
+        ])
+    },
+    async (token, done) => {
+        try {
+            return done(null, token.user);
+        } catch (err) {
+            done(err);
+        }
+    })
+)

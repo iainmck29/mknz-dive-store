@@ -19,8 +19,13 @@ const getUserByUsername = async (req: Request, res: Response, next: NextFunction
 
 const newUser = async (req: Request, res: Response) => {
     const { username, password } = req.body
+    console.log(username, password)
+    try {
     const result = await userService.newUser(username, password);
     return res.status(200).json(result)
+    } catch (err) {
+        console.log('failing here')
+    }
 }
 
 const updateUser = async (req: Request, res: Response) => {
