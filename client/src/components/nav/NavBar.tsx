@@ -12,7 +12,9 @@ export default function NavBar () {
                     <Nav.Link href="#">Home</Nav.Link>
                     <Nav.Link href="#">Products</Nav.Link>
                     <Nav.Link href="#">Contact</Nav.Link>
-                    <Nav.Link href="#">Username</Nav.Link>
+                    <Nav.Link href="#">Profile</Nav.Link>
+                    <Nav.Link href="#">Cart</Nav.Link>
+
 
                 </Nav>
             </Container>

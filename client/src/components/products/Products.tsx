@@ -30,9 +30,9 @@ export default function Products (props: any) {
     }
     return (
         <Container>
-            {products.map((product: any) => {
+            {/* {products.map((product: any) => {
                 return <ProductCard imgSrc="snorkel.png"productTitle={product.id}/>
-            })}
+            })} */}
 
 
 
