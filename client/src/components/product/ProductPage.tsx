@@ -8,7 +8,7 @@ export default function ProductPage () {
                 <Col>
                     <Container>
                         <Card style={{width: "100%"}}>
-                            <Card.Img src="BCD.jpg" />
+                            <Card.Img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1654093976/dive_store_products/BCD_scphbx.jpg" />
                         </Card>
                     </Container>
                 </Col>
