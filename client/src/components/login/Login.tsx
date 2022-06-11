@@ -1,42 +1,127 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import Alert from "react-bootstrap/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { Button } from "react-bootstrap";
 import './Login.css'
 import { Link, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form"
+import apiAxios from "../../config/axiosConfig";
+import { useDispatch } from "react-redux";
+import { fetchCurrentUser } from "./userSlice";
+import { AppDispatch } from "../../store/store";
+
+type Inputs = {
+    username: string,
+    password: string,
+  };
 
 export default function Login () {
+    const { handleSubmit, register, formState: { errors } } = useForm<Inputs>({
+        defaultValues: {
+            username: "",
+            password: ""
+        }
+    });
+    const [loginMsg, setLoginMsg] = useState<String>();
+    const dispatch = useDispatch<AppDispatch>();
+
+    //Determine if user is coming from login or register route
     const location = useLocation();
-    // console.log(location.pathname)
     const loginLocation = location.pathname === "/login" ? true : false
+
+    const handleLogin = async (data: any) => {
+    // Send login details to server
+        if (loginLocation) {
+            try {
+                const response = await apiAxios.post(
+                    '/auth/login',
+                    {
+                        username: data.username,
+                        password: data.password
+                    },
+                    {withCredentials: true}
+                )
+                if (response.status === 200) {
+                    //To do, get user from redux etc
+                    dispatch(fetchCurrentUser())
+                    console.log("logged in successfully")
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    setLoginMsg(error.message);
+                }
+            }
+        }
+    // Else send registration details to server
+        else {
+            try {
+            const response = await apiAxios.post(
+                '/auth/register',
+                {
+                    username: data.username,
+                    password: data.password
+                },
+                { withCredentials: true }
+            )
+            if (response.status === 200) {
+                console.log("registered successfully")
+            }
+            } catch (error) {
+                if (error instanceof Error) {
+                    setLoginMsg(error.message)
+                }
+            }
+        }
+    }
+
+
     
     return (
         <Container className="d-flex flex-column justify-content-center mt-5 w-25 p-3 border bg-light">
-        <Form className="">
+            {loginMsg && <Alert variant="danger">{loginMsg}</Alert>}
+        <Form onSubmit={handleSubmit(handleLogin)}>
             {loginLocation
             ? <h2>Log In</h2>
             : <h2>Register</h2>}
             
-            <Form.Group className="mb-3 mt-4" controlId="formGroupUsername">
-                <InputGroup size="sm">
+            <Form.Group className="mb-3 mt-4" controlId="username" >
+                <InputGroup size="sm" >
                 <InputGroup.Text id="userIcon">
                     <FontAwesomeIcon icon={faUser} />
                 </InputGroup.Text>
-                <Form.Control type="text" placeholder="Username" />
+                <Form.Control type="text"
+                placeholder="Username"
+                {...register("username",
+                {required: "This field is required"})}/>
                 </InputGroup>
+            <p>{errors.username?.message}</p>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
+
+
+            <Form.Group className="mb-3" controlId="password">
                 <InputGroup size="sm">
                 <InputGroup.Text id="passwordLockIcon">
                     <FontAwesomeIcon icon={faLock} />
                 </InputGroup.Text>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password"
+                placeholder="Password"
+                {...register("password",
+                {required: "This field is required",
+                minLength: {
+                    value: 4,
+                    message: "Please enter password of minimum 4 characters"
+                }})} />
                 </InputGroup>
+            <p>{errors.password?.message}</p>
             </Form.Group>
+
+
+
             <div className="d-grid gap-2">
                 {loginLocation
                 ?             

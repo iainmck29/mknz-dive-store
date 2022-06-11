@@ -1,9 +1,18 @@
-const stripe = require('stripe')('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');
+const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 import { Request, Response, NextFunction } from 'express'
+import { cartService } from '../services';
 
-// const createPaymentintent = async (req: Request, res: Response, next: NextFunction) => {
-//     //@ts-ignore
-//     const userID = req.user.id;
+export const createPaymentintent = async (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    const cartID = req.cart.id;
     
-//     const amount = 
-// }
+    const amount = await cartService.getCartTotal(cartID);
+    
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: "gbp"
+    })
+    res.send({
+        clientSecret: paymentIntent.clientSecret
+    })
+}

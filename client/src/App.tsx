@@ -6,6 +6,8 @@ import Home from "./components/home/Home"
 import Login from './components/login/Login';
 import Profile from './components/profile/Profile';
 import ProductPage from './components/product/ProductPage';
+import CartPage from './components/cart/CartPage';
+import Logout from './components/logout/Logout';
 
 function App() {
   return (
@@ -15,8 +17,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Login />} />
         <Route path="/:id" element={<Profile />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/products/:id" element={<ProductPage />} />
       </Routes>
     </div>

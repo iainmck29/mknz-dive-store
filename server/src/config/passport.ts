@@ -16,11 +16,13 @@ async (username, password, done) => {
     if (!user) {
         return done(null, false, { message: "User not found"})
     }
+
     //@ts-ignore
-    if (!comparePassword(password, user.password)) {
+    const match = bcrypt.compare(password, user.password_hash)
+
+    if (!match) {
         return done(null, false, { message: " Incorrect password" });
     }
-
     return done(null, user, {message: "success"})
 }
 ));
@@ -28,7 +30,7 @@ async (username, password, done) => {
 passport.use(
     'jwt-customer',
     new JWTStrategy({
-        secretOrKey: 'nf183yfnap9v9dfnqiov',
+        secretOrKey: process.env.JWT_KEY,
         jwtFromRequest: ExtractJwt.fromExtractors([
             (req) => {
                 let token = null;

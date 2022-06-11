@@ -1,7 +1,10 @@
 import passport from "passport";
 import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import { nextTick } from "process";
+import { userService } from "../services";
+import { hashPassword } from "../utils/helpers";
 const isProduction = process.env.NODE_ENV === 'production'
 
 
@@ -21,10 +24,9 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
                 if (error) return next(error);
 
                 const body = { id: user.id }
-                console.log(user.id)
                 const token = jwt.sign({ user: body},
                     // @ts-ignore
-                    'nf183yfnap9v9dfnqiov'
+                    process.env.JWT_KEY
                     )
 
                 res.cookie('A_JWT', token, {
@@ -39,6 +41,18 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
         })(req, res, next);
 };
 
+const registerUser = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, password } = req.body;
+    const existingUser = await userService.getUserByUsername(username);
+    if (existingUser) {
+        return res.status(403).send('User with this username already exists');
+    }
+
+    const password_hash = await hashPassword(password, next)
+
+    const newUser = await userService.newUser(username, password_hash)
+}
+
 const logout = (req: Request, res: Response, next: NextFunction) => {
     res.clearCookie('A_JWT');
     res.status(200).send();
@@ -49,5 +63,6 @@ const logout = (req: Request, res: Response, next: NextFunction) => {
 
 export const auth = {
     loginUser,
-    logout
+    logout,
+    registerUser
 }

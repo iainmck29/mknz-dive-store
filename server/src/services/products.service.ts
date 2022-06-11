@@ -65,6 +65,11 @@ const deleteProduct = async (id: string) => {
     return rows[0];
 };
 
+const getProductPrice = async (id: string) => {
+    const { rows } = await query(`SELECT price FROM products WHERE id = $1`, [id]);
+    return rows[0];
+}
+
 export const productService = {
     getProducts,
     getProductById,
@@ -72,4 +77,5 @@ export const productService = {
     addToCategories,
     updateProduct,
     deleteProduct,
+    getProductPrice
 };

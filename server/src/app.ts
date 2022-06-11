@@ -13,12 +13,13 @@ import cookieParser from "cookie-parser";
 const app = express();
 const port = 9000;
 
-// const corsOptions = {
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+}
 
-// }
 
-
-app.use(cors())
+app.use(cors(corsOptions))
 
 app.use(helmet());
 app.use(express.json());

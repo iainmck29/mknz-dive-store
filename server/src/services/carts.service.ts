@@ -57,6 +57,11 @@ const deleteCartFromCartProducts = async (id: string) => {
     return rows[0];
 };
 
+const getCartTotal = async (id: string) => {
+    const { rows } = await query('SELECT total FROM cart WHERE id = $1', [id]);
+    return rows[0];
+};
+
 export const cartService = {
     getCartById,
     createCart,
@@ -66,5 +71,6 @@ export const cartService = {
     checkProductInCart,
     addToCart,
     getCartProducts,
-    updateCartTotal
+    updateCartTotal,
+    getCartTotal
 };

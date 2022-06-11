@@ -5,6 +5,7 @@ import { merchantRouter } from './merchants';
 import { orderRouter } from './orders';
 import { productRouter } from './products';
 import {userRouter} from './users'
+import { checkoutRouter } from './checkout'
 
 export const router = Router();
 
@@ -13,4 +14,5 @@ router.use('/merchants', merchantRouter);
 router.use('/products', productRouter);
 router.use('/orders', orderRouter);
 router.use('/cart', cartRouter);
-router.use('/auth', authRouter)
+router.use('/auth', authRouter);
+router.use('/checkout', checkoutRouter);

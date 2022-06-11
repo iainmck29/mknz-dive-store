@@ -1,9 +1,12 @@
 import bcrypt from "bcrypt"
+import { NextFunction } from "express";
 import { userService } from "../services";
+
 type Product = {
     quantity: number,
     price: number
 }
+
 type Products = Product[];
 
 export const calculateTotalCost = (products: Products) => {
@@ -13,21 +16,19 @@ export const calculateTotalCost = (products: Products) => {
 }
 
 
-export const hashPassword = (password: string) => {
-    bcrypt.hash(password, 10, (err, hash) => {
-        if (err) {
-            return err;
-        }
-        return hash;
-    })
-}
+export const hashPassword = async (password: string, next: NextFunction) => {
+    const hashedPassword = await bcrypt.hash(password, 10)
+    return hashedPassword
+   }
 
 export const comparePassword = async (username: string, password: string) => {
     const user = await userService.getUserByUsername(username);
+    console.log(user)
     //@ts-ignore
-    bcrypt.compare(password, user.password, (err, result) => {
+    bcrypt.compare(password, user.password_hash, (err, result) => {
         if (err) {
-            return err
+            console.log(err)
+            return result;
         }
         return result;
     })

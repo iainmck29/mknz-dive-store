@@ -22,8 +22,8 @@ const getCurrentUser = async (id: string) => {
 }
 
 const getUserByUsername = async (username: string) => {
-    const { rows: user } = await query(`SELECT * FROM users WHERE username = $1`, [username]);
-    return user;
+    const { rows } = await query(`SELECT * FROM users WHERE username = $1`, [username]);
+    return rows[0];
 }
 
 const newUser = async (username: string, password: string) => {
@@ -31,7 +31,6 @@ const newUser = async (username: string, password: string) => {
     const { rows: user } = await query(`INSERT INTO users(username, password_hash) VALUES ($1, $2) RETURNING *`, [username, password])
     return user;
     } catch(err) {
-        console.log('failing here')
         console.log(err)
     }
 };

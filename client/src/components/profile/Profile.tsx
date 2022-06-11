@@ -6,12 +6,12 @@ import UserInfo from "./UserInfo";
 
 export default function Profile () {
     return (
-        // Past/current order details
+
         <Container className="mb-0">
             <Details />
             <UserInfo />
             <Orders />
         </Container>
-        // Delivery info
+
     )
 }

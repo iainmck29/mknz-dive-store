@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 
 export default function CategoryCard (props: any) {
     return (
-        <Card className="text-center" style={{ width: "8rem", }}>
+        <Card className="text-center" style={{ width: "9rem", }}>
             <Card.Img variant="top" src={props.imgSrc} />
             <Card.Body>
                 <Card.Title>{props.categoryTitle}</Card.Title>

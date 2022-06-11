@@ -9,13 +9,11 @@ export default function NavBar () {
             <Container>
                 <Navbar.Brand href="#home">MKNZ Dive store</Navbar.Brand>
                 <Nav className="justify-content-end">
-                    <Nav.Link href="#">Home</Nav.Link>
-                    <Nav.Link href="#">Products</Nav.Link>
-                    <Nav.Link href="#">Contact</Nav.Link>
-                    <Nav.Link href="#">Profile</Nav.Link>
-                    <Nav.Link href="#">Cart</Nav.Link>
-
-
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/profile/:id">Profile</Nav.Link>
+                    <Nav.Link href="/cart">Cart</Nav.Link>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/logout">Logout</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
