@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DropdownButton, Col, Container, InputGroup, Row, Table, Dropdown, Button, Form } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import CartItem from "./CartItem";
+import { selectCartID, selectCurrentCart } from "./cartSlice";
+
+type cartProduct = {
+    product_id: string,
+    quantity: string
+}
 
 export default function CartPage () {
+    const cartProducts = useAppSelector(selectCurrentCart)
+
+
+    useEffect(() => {
+        //@ts-ignore
+        // dispatch(fetchCurrentCart(cartID))
+    }, [])
+
+
     return (
         <Container>
             <h2>Current cart</h2>
@@ -10,26 +26,9 @@ export default function CartPage () {
                 <Col sm={8}>
                     <Container className="text-start">
                         <h4>Shopping cart</h4>
-                        {/* render for each item in cart*/}
-                        <CartItem />
-                        <CartItem />
-                        <CartItem />
-                        <CartItem />
-
-                        {/* <Table>
-                            <thead>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Total price</th>
-                            </thead>
-                            <tbody>
-                                <td>BCD</td>
-                                <td>
-                                    2
-                                </td>
-                                <td>£550</td>
-                            </tbody>
-                        </Table> */}
+                        {cartProducts?.map((cartProduct: any) => {
+                            return <CartItem product_id={cartProduct.product_id} quantity={cartProduct.quantity} key={cartProduct.product_id} />
+                        })}
                     </Container>
                 </Col>
                 <Col sm={4}>

@@ -30,7 +30,7 @@ async (username, password, done) => {
 passport.use(
     'jwt-customer',
     new JWTStrategy({
-        secretOrKey: process.env.JWT_KEY,
+        secretOrKey: 'nf183yfnap9v9dfnqiov',
         jwtFromRequest: ExtractJwt.fromExtractors([
             (req) => {
                 let token = null;

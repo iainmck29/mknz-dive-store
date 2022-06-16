@@ -25,6 +25,7 @@ const getProducts = async () => {
 
 const getProductById = async (id: string) => {
     const { rows } = await query(`SELECT * FROM products WHERE id = $1`, [id]);
+    return rows[0]
 };
 
 const createProduct = async (product: Product) => {

@@ -8,8 +8,14 @@ import Profile from './components/profile/Profile';
 import ProductPage from './components/product/ProductPage';
 import CartPage from './components/cart/CartPage';
 import Logout from './components/logout/Logout';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser, selectIsLoggedIn } from './components/login/userSlice';
+import { Checkout } from './components/checkout/Checkout';
 
 function App() {
+  const user = useSelector(selectCurrentUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <div className="App">
     <NavBar />
@@ -23,6 +29,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );

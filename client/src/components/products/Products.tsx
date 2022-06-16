@@ -6,6 +6,7 @@ import ProductCard from '../product/ProductCard'
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import { fetchAllProducts, selectErrorLoadingProducts, selectLoadingProducts, selectProducts } from "./productsSlice";
 import Spinner from "react-bootstrap/Spinner";
+import style from "./Products.module.css"
 
 export default function Products (props: any) {
     const products = useAppSelector(selectProducts);
@@ -29,16 +30,10 @@ export default function Products (props: any) {
         )
     }
     return (
-        <Container>
-            {/* {products.map((product: any) => {
-                return <ProductCard imgSrc="snorkel.png"productTitle={product.id}/>
-            })} */}
-
-
-
-
-
-
+        <Container className={style.productsContainer}>
+            {products.map((product: any) => {
+                return <ProductCard imgSrc={product.img_src} productTitle={product.title} price={product.price} key={product.id} id={product.id}/>
+            })}
         </Container>
     )
 }

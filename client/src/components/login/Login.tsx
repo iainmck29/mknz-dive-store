@@ -8,12 +8,14 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { Button } from "react-bootstrap";
 import './Login.css'
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import apiAxios from "../../config/axiosConfig";
 import { useDispatch } from "react-redux";
-import { fetchCurrentUser } from "./userSlice";
+import { fetchCurrentUser, updateIsLoggedIn } from "./userSlice";
 import { AppDispatch } from "../../store/store";
+import { selectCartID, setCartID } from "../cart/cartSlice";
+import { useAppSelector } from "../../config/hooks";
 
 type Inputs = {
     username: string,
@@ -29,6 +31,7 @@ export default function Login () {
     });
     const [loginMsg, setLoginMsg] = useState<String>();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     //Determine if user is coming from login or register route
     const location = useLocation();
@@ -47,9 +50,12 @@ export default function Login () {
                     {withCredentials: true}
                 )
                 if (response.status === 200) {
-                    //To do, get user from redux etc
-                    dispatch(fetchCurrentUser())
-                    console.log("logged in successfully")
+                    //@ts-ignore
+                    await dispatch(fetchCurrentUser(response.data.id));
+                    await dispatch(updateIsLoggedIn(true));
+                    //@ts-ignore
+                    await dispatch(setCartID(response.data.id))
+                    navigate('/');
                 }
             } catch (error) {
                 if (error instanceof Error) {
@@ -137,7 +143,7 @@ export default function Login () {
             </div>
         </Form>
         <Container className="or-seperator"><i>or</i></Container>
-        <Button variant="danger" type="submit" size="sm">
+        <Button variant="danger" type="submit" size="sm" disabled title="Currently developing feature">
             <span className="me-2">
             <FontAwesomeIcon icon={faGoogle} />
             </span>

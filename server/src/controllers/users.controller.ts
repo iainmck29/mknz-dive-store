@@ -1,14 +1,25 @@
 import { userService } from "../services";
 import { NextFunction, Request, Response } from "express";
+import { nextTick } from "process";
 
 const getUsers = async (req: Request, res: Response) => {
     const results = await userService.getUsers();
     return res.status(200).json(results);
 }
 
-const getCurrentUser = async (req: Request, res: Response) => {
-    const result = await userService.getCurrentUser(req.params.id);
-    return res.status(200).json(result)
+const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore    
+    const id = req.user.id
+    if (id) {
+        // if (id !== req.params.id) {
+        //     res.status(401).send('You are not authorised to view that profile')
+        // }
+        const result = await userService.getCurrentUser(id);
+        res.status(200).json(result)
+        next();
+    } else {
+        return res.status(404).send();
+    }
 }
 
 const getUserByUsername = async (req: Request, res: Response, next: NextFunction) => {

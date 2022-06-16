@@ -26,7 +26,7 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
                 const body = { id: user.id }
                 const token = jwt.sign({ user: body},
                     // @ts-ignore
-                    process.env.JWT_KEY
+                    'nf183yfnap9v9dfnqiov'
                     )
 
                 res.cookie('A_JWT', token, {
@@ -35,7 +35,7 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
                     sameSite: 'lax',
                     secure: false
                 })
-                res.status(200).send('login successful')
+                res.status(200).send(user)
             } 
         )
         })(req, res, next);

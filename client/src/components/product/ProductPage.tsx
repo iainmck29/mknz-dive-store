@@ -1,23 +1,84 @@
-import React from "react";
-import { Button, Card, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Container, Form, InputGroup, Row, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import apiAxios from "../../config/axiosConfig";
+import { useAppDispatch, useAppSelector } from "../../config/hooks";
+import { selectCartID, refreshCart } from "../cart/cartSlice";
+import { selectCurrentUser, selectIsLoggedIn } from "../login/userSlice";
 
 export default function ProductPage () {
+    const { id } = useParams();
+    const dispatch = useAppDispatch()
+    const cartID = useAppSelector(selectCartID);
+    const userID = useAppSelector(selectCurrentUser).id;
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
+    const [product, setProduct] = useState({
+        id: null,
+        merchant_id: null,
+        description: "",
+        price: "",
+        title: "",
+        img_src: "",
+        price_id: ""
+    });
+
+    const setCurrentProduct = async () => {
+        const response = await apiAxios.get(`/products/${id}`)
+        setProduct(response.data);
+    }
+
+    const addToCart = async (e: any) => {
+        e.preventDefault()
+        if (!isLoggedIn) {
+            alert('You must be logged in to add items to cart!');
+            return
+        }
+        try {
+            const response = await apiAxios.post(`/cart/add`, {
+                cartID,
+                productID: product.id,
+                quantity: 1
+            })
+            if (response.status === 200) {
+
+                //@ts-ignore
+                await dispatch(refreshCart(cartID))
+                alert('Item successfully added to cart');
+
+        }
+
+        } catch (err) {
+            alert('Something went wrong. Please try again later');
+        }
+    }
+
+
+    useEffect(() => {
+        setCurrentProduct();
+    }, [])
+    
+    if (product.id === null) {
+        return (
+            <Spinner animation="border"/>
+        )
+    }
     return (
         <Container className="mt-4">
             <Row>
                 <Col>
                     <Container>
                         <Card style={{width: "100%"}}>
-                            <Card.Img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1654093976/dive_store_products/BCD_scphbx.jpg" />
+                            <Card.Img src={product.img_src} />
                         </Card>
                     </Container>
                 </Col>
                 <Col>
-                    <h2>Product Name</h2>
-                    <h4>£20.99</h4>
-                    <p className="text-start fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid quo iusto, voluptates architecto commodi quibusdam. Dolorem, itaque. Labore quisquam et consequatur sint, nobis expedita? Quaerat est numquam saepe maiores facilis sequi et consequuntur rerum assumenda vero quisquam perferendis adipisci provident ea nemo neque ipsam nulla, consequatur, voluptatem quis. At perspiciatis consectetur aliquam itaque corrupti ullam natus facere officia! Alias hic minima sint magnam quas veniam eius fugiat illum quis? Omnis corrupti provident, ipsa, corporis quidem beatae, laudantium eveniet numquam similique quisquam odio minus. Esse, voluptatem. Dicta placeat ipsum tempora cum. Quidem voluptas iure soluta et itaque numquam distinctio recusandae esse.</p>
-
+                    <h2>{product.title}</h2>
+                    <h4>{product.price}</h4>
+                    <p className="text-start fs-6">{product.description}</p>
+                    <Form onSubmit={addToCart}>
                     <Button variant="success" type="submit">Add to Cart</Button>
+                    </Form>
                 </Col>
             </Row>
         </Container>

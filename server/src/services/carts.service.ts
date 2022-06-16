@@ -7,7 +7,7 @@ type CartProduct = {
 };
 
 const getCartById = async (id: string) => {
-    const { rows } = await query(`SELECT * FROM cart WHERE id = $1`, [id]);
+    const { rows } = await query(`SELECT * FROM cart WHERE user_id = $1`, [id]);
     return rows[0];
 };
 
@@ -18,23 +18,29 @@ const createCart = async (user_id: string) => {
 
 const updateCart = async (cartProduct: CartProduct) => {
     const { productID, quantity, cartID } = cartProduct;
-    const { rows } = await query(`UPDATE cart_products (product_id, quantity) VALUES ($1, $2) WHERE cart_id = $3 RETURNING *`, [productID, quantity, cartID]);
+    const { rows } = await query(`UPDATE cart_products SET quantity = quantity + 1 WHERE cart_id = $1 AND product_id = $2 RETURNING *`, [cartID, productID]);
     return rows[0];
 };
 
 const addToCart = async (cartProduct: CartProduct) => {
     const { productID, quantity, cartID } = cartProduct;
-    const { rows } = await query(`INSERT INTO cart_products (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`, [cartID, productID, quantity]);
+    console.log(productID, quantity, cartID)
+    const { rows } = await query(`INSERT INTO cart_products VALUES ($1, $2, $3) RETURNING *`, [cartID, productID, quantity]);
     return rows[0];
 };
 
 const checkProductInCart = async (productID: string, cartID: string) => {
     const { rows } = await query(`SELECT * FROM cart_products WHERE cart_id = $1 AND product_id = $2`, [cartID, productID]);
-    if (rows) {
+    if (rows.length !== 0) {
         return true;
     } else {
         return false;
     }
+}
+
+const deleteFromCart = async (cartID: string, productID: string) => {
+    const { rows } = await query(`DELETE FROM cart_products WHERE product_id = $1`, [productID])
+    return rows[0];
 }
 
 const getCartProducts = async (cartID: string) => {
@@ -43,7 +49,7 @@ const getCartProducts = async (cartID: string) => {
 }
 
 const updateCartTotal = async (total: number, cartID: number) => {
-    const { rows } = await query(`UPDATE cart(total) VALUES ($1) WHERE id = $2`, [total, cartID]);
+    const { rows } = await query(`UPDATE cart SET total = $1 WHERE id = $2`, [total, cartID]);
     return rows[0];
 };
 
@@ -72,5 +78,6 @@ export const cartService = {
     addToCart,
     getCartProducts,
     updateCartTotal,
-    getCartTotal
+    getCartTotal,
+    deleteFromCart
 };
