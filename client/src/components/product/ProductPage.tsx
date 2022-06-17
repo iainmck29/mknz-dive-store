@@ -10,7 +10,6 @@ export default function ProductPage () {
     const { id } = useParams();
     const dispatch = useAppDispatch()
     const cartID = useAppSelector(selectCartID);
-    const userID = useAppSelector(selectCurrentUser).id;
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const [product, setProduct] = useState({
         id: null,

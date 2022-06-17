@@ -1,4 +1,4 @@
-import { orderService, productService } from "../services";
+import { cartService, orderService, productService } from "../services";
 import { Request, Response } from "express";
 import { calculateTotalCost } from "../utils/helpers";
 
@@ -14,25 +14,20 @@ const getOrderById = async (req: Request, res: Response) => {
 };
 
 const createOrder = async (req: Request, res: Response) => {
-    const { customer_id, products } = req.body;
-    // Calculate total cost
-    const total_cost = calculateTotalCost(products);
-    // For each product insert into orders_products with quantity
-    for await (const product of products) {
-        //@ts-ignore
-        const productPrice = await productService.getProductById(product.product_id).price;
-    };
+    const { userID, cartID, cartProducts } = req.body;
+    // MAKE SURE NOT RETURNING OBJECT
+    const total = await cartService.getCartTotal(cartID)
 
-    const addToOrdersProducts = await orderService.addOrderToOrders({customer_id, total_cost});
     //@ts-ignore
-    const order_id = addToOrdersProducts.id;
+    const addToOrdersProducts = await orderService.addOrderToOrders({userID, total: total.total});
+    //@ts-ignore
+    const orderID = addToOrdersProducts.id;
 
-    for await (const product of products) {
-        const { product_id, quantity } = product
-        const addToOrders = orderService.addProductsToOrder({order_id, product_id, quantity});
-    };
+    cartProducts.forEach(async (product: any) => {
+        await orderService.addProductsToOrder({order_id: orderID, product_id: product.product_id, quantity: product.quantity})
+    });
 
-    return res.status(200).json(addToOrdersProducts);
+    return res.status(200).json(orderID);
 };
 
 

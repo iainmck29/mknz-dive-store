@@ -11,6 +11,11 @@ import Logout from './components/logout/Logout';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser, selectIsLoggedIn } from './components/login/userSlice';
 import { Checkout } from './components/checkout/Checkout';
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+
+const stripePromise = loadStripe("pk_test_51L3IMqLnUzVHmZYuaddv5e4oK7HY93k6ErSqo0f8UKpYnMK4UvP7p1gILF5zH9dgmyM7lnsEms0QhqmLvCXHn0Q800GcDjpQSG");
+
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -19,7 +24,7 @@ function App() {
   return (
     <div className="App">
     <NavBar />
-
+      <Elements stripe={stripePromise}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -31,6 +36,7 @@ function App() {
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
+      </Elements>
     </div>
   );
 }

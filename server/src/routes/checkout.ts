@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { checkout } from '../controllers/checkout.controller';
+import { createPaymentintent } from '../controllers/payments.controller';
+
 
 export const checkoutRouter = Router();
 
-checkoutRouter.route('/').post(checkout.createCheckoutSession);
+checkoutRouter.route('/create-payment-intent').post(createPaymentintent);

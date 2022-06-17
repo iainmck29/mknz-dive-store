@@ -7,8 +7,8 @@ type OrderedProduct = {
 }
 
 type Order = {
-    customer_id: number,
-    total_cost: number
+    userID: number,
+    total: number
 };
 
 
@@ -23,13 +23,13 @@ const getOrderById = async (id: string) => {
 };
 
 const addOrderToOrders = async (order: Order) => {
-    const { customer_id, total_cost } = order
+    const { userID, total } = order
     const { rows } = await query(`INSERT INTO orders (
         customer_id,
         total_cost
     ) VALUES (
         $1, $2
-    ) RETURNING *`, [customer_id, total_cost])
+    ) RETURNING *`, [userID, total])
     return rows[0]
 }
 
