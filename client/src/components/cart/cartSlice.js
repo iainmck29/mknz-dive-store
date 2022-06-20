@@ -8,7 +8,7 @@ export const setCartID = createAsyncThunk('cart/setCartID', async (userID) => {
         return cart.data.id
     } else {
         let newCart = await apiAxios.post('/cart/new-cart', {
-            id: userID
+            user_id: userID
         })
         return newCart.data.id;
     }
@@ -47,6 +47,7 @@ export const cartSlice = createSlice({
         clearCartState: (state, action) => {
             state.cart = action.payload;
             state.cartID = null;
+            state.total = null;
         },
         removeFromCart: (state, action) => {
             state.cart.filter(product => product.product_id !== action.payload)

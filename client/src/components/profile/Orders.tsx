@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
+import apiAxios from "../../config/axiosConfig";
+import { useAppSelector } from "../../config/hooks";
+import { selectCurrentUserID } from "../login/userSlice";
+import OrderRow from "./OrderRow";
 
 export default function Orders () {
+    const [orders, setOrders] = useState([]);
+    const userID = useAppSelector(selectCurrentUserID);
+
+    const getOrders = async () => {
+        const results = await apiAxios.post(`/orders/user`, {
+            userID
+        })
+        setOrders(results.data)
+    }
+
+    useEffect(() => {
+        getOrders();
+    }, [])
+
     return (
         <Container className="d-flex flex-column text-start mt-5 ms-0 ps-0">
             <h5>Orders</h5>
@@ -16,12 +34,9 @@ export default function Orders () {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1/1/22</td>
-                        <td>Completed</td>
-                        <td>£100</td>
-                    </tr>
+                    {orders?.map((order: any) => {
+                        return <OrderRow order={order} key={order.id}/>
+                    })}
                 </tbody>
             </Table>
 

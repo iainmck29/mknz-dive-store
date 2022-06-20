@@ -45,6 +45,7 @@ export const {
 } = userSlice.actions;
 
 export const selectCurrentUser = state => state.users.currentUser;
+export const selectCurrentUserID = state => state.users.currentUser.id;
 export const selectCurrentUserStatus = state=> state.users.currentUserStatus;
 export const selectIsLoggedIn = state => state.users.isLoggedIn;
 export default userSlice.reducer;

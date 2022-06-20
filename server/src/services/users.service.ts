@@ -4,7 +4,6 @@ type UpdatedUser = {
     id: string,
     first_name: string,
     last_name: string,
-    username: string,
     address1: string,
     address2: string,
     postcode: string,
@@ -36,20 +35,18 @@ const newUser = async (username: string, password: string) => {
 };
 
 const updateUser = async (user: UpdatedUser) => {
-    const { first_name, last_name, username, address1, address2, postcode, city, id } = user;
+    const { first_name, last_name, address1, address2, postcode, city, id } = user;
     const { rows: updatedUser } = await query(`UPDATE users SET
         first_name = $1,
         last_name = $2,
-        username = $3,
-        address1 = $4,
-        address2 = $5,
-        postcode = $6,
-        city = $7
-        WHERE id = $8
+        address1 = $3,
+        address2 = $4,
+        postcode = $5,
+        city = $6
+        WHERE id = $7
         RETURNING *`, [
         first_name,
         last_name,
-        username,
         address1,
         address2,
         postcode,

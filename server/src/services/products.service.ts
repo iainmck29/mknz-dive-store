@@ -28,6 +28,16 @@ const getProductById = async (id: string) => {
     return rows[0]
 };
 
+const getProductCategories = async () => {
+    const { rows } = await query(`SELECT * FROM products_categories`);
+    return rows;
+}
+
+const getProductCategoriesyById = async (id: string) => {
+    const { rows } = await query(`SELECT category from products_categories WHERE product_id = $1`, [id]);
+    return rows;
+}
+
 const createProduct = async (product: Product) => {
     const { merchant_id, description, price } = product
     const { rows } = await query(`INSERT INTO products (
@@ -74,6 +84,7 @@ const getProductPrice = async (id: string) => {
 export const productService = {
     getProducts,
     getProductById,
+    getProductCategoriesyById,
     createProduct,
     addToCategories,
     updateProduct,

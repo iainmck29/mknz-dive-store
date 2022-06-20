@@ -9,16 +9,19 @@ import ProductPage from './components/product/ProductPage';
 import CartPage from './components/cart/CartPage';
 import Logout from './components/logout/Logout';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser, selectIsLoggedIn } from './components/login/userSlice';
+import { selectIsLoggedIn } from './components/login/userSlice';
 import { Checkout } from './components/checkout/Checkout';
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
+import CheckoutSuccess from './components/checkout/CheckoutSuccess';
+import Protected from './components/ProtectedRoute';
+import Footer from './components/footer/Footer';
 
-const stripePromise = loadStripe("pk_test_51L3IMqLnUzVHmZYuaddv5e4oK7HY93k6ErSqo0f8UKpYnMK4UvP7p1gILF5zH9dgmyM7lnsEms0QhqmLvCXHn0Q800GcDjpQSG");
+//@ts-ignore
+const stripePromise = loadStripe(process.env.STRIPE_TEST_KEY);
 
 
 function App() {
-  const user = useSelector(selectCurrentUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
@@ -30,13 +33,26 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Login />} />
-        <Route path="/:id" element={<Profile />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/cart" element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <CartPage />
+          </Protected>
+        } />
+        <Route path="/profile/:id" element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <Profile />
+          </Protected>
+        } />
         <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout" element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <Checkout />
+          </Protected>} />
+        <Route path="/checkout/:orderID/success" element={<CheckoutSuccess />} />
       </Routes>
       </Elements>
+      {/* <div className="or-seperator mb-3"></div> */}
+      {/* <Footer /> */}
     </div>
   );
 }

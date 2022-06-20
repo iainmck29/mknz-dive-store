@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Dropdown, Form, Image } from "react-bootstrap";
 import apiAxios from "../../config/axiosConfig";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
-import { selectCurrentUser } from "../login/userSlice";
 import styles from './Cart.module.css';
 import { refreshCart, selectCartID } from "./cartSlice";
 
@@ -57,23 +56,21 @@ export default function CartItem (props: product) {
 
 
     return (
-        <Container className="d-flex flex-row justify-content-between align-items-center px-0 py-2 border-bottom ">
-                <Image thumbnail src={product.img_src} className={`${styles.w10}`}/>
-            <h5 className="my-0">{product.title}</h5>
+        <tr>
+            <td>
+                <Image thumbnail src={product.img_src} />
+            </td>
+            <td className={styles.dataAlign}>
+                <h5 className="my-0">{product.title}</h5>
+            </td>
+            <td className={styles.dataAlign}>
                 <span>{props.quantity}</span>
-            {/* <Form>
-                <Form.Select aria-label="select quantity" onChange={}>
-                    <option>{props.quantity}</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </Form.Select>
-            </Form> */}
-            <Button variant="outline-danger" onClick={removeFromCart}>
+            </td>
+            <td className={styles.dataAlign}>
+            <Button variant="outline-danger" className={styles.noBorder} onClick={removeFromCart}>
                 X
             </Button>
-            <h5 className="my-0"></h5>
-
-        </Container>
+            </td>
+            </tr>
     )
 }

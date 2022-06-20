@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import apiAxios from "../../config/axiosConfig";
 import { useAppDispatch } from "../../config/hooks";
 import { clearCartState } from "../cart/cartSlice";
-import { updateIsLoggedIn } from "../login/userSlice";
+import { updateCurrentUser, updateIsLoggedIn } from "../login/userSlice";
 
 
 const Logout = () => {
@@ -12,11 +12,12 @@ const Logout = () => {
     useEffect(() => {
         apiAxios.get('/auth/logout');
         dispatch(updateIsLoggedIn(false));
+        dispatch(updateCurrentUser({}));
         dispatch(clearCartState([]));
     })
 
     return (
-        <Container>
+        <Container style={{marginTop: "2rem"}}>
             <Alert variant="primary">You have been successfully logged out!</Alert>
         </Container>
     )

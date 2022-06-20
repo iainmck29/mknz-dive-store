@@ -35,18 +35,17 @@ const newUser = async (req: Request, res: Response) => {
     const result = await userService.newUser(username, password);
     return res.status(200).json(result)
     } catch (err) {
-        console.log('failing here')
+        console.log(err)
     }
 }
 
 const updateUser = async (req: Request, res: Response) => {
-    const { first_name, last_name, username, address1, address2, postcode, city } = req.body;
+    const { first_name, last_name, address1, address2, postcode, city } = req.body;
     const { id } = req.params;
 
     const result = await userService.updateUser({
         first_name,
         last_name,
-        username,
         address1,
         address2,
         postcode,

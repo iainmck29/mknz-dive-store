@@ -30,10 +30,13 @@ export default function Products (props: any) {
         )
     }
     return (
+        <div>
+        <h2 className="header">PRODUCTS</h2>
         <Container className={style.productsContainer}>
             {products.map((product: any) => {
-                return <ProductCard imgSrc={product.img_src} productTitle={product.title} price={product.price} key={product.id} id={product.id}/>
+                return <ProductCard imgSrc={product.img_src} productTitle={product.title} price={product.price} key={product.id} id={product.id} categories={product.categories}/>
             })}
         </Container>
+        </div>
     )
 }

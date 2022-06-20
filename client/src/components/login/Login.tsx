@@ -3,6 +3,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Alert from "react-bootstrap/Alert";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
@@ -85,10 +87,16 @@ export default function Login () {
         }
     }
 
+    const renderTooltip = (props: any) => (
+        <Tooltip id="button-tooltip" {...props}>
+          Currently developing feature!
+        </Tooltip>
+      );
+
 
     
     return (
-        <Container className="d-flex flex-column justify-content-center mt-5 w-25 p-3 border bg-light">
+        <Container className="d-flex flex-column justify-content-center mt-5 w-25 p-3 border bg-light ">
             {loginMsg && <Alert variant="danger">{loginMsg}</Alert>}
         <Form onSubmit={handleSubmit(handleLogin)}>
             {loginLocation
@@ -142,8 +150,14 @@ export default function Login () {
 
             </div>
         </Form>
+        
         <Container className="or-seperator"><i>or</i></Container>
-        <Button variant="danger" type="submit" size="sm" disabled title="Currently developing feature">
+        <OverlayTrigger
+      placement="right"
+      delay={{ show: 250, hide: 400 }}
+      overlay={renderTooltip}
+    >
+        <Button variant="danger" type="submit" size="sm" title="Currently developing feature">
             <span className="me-2">
             <FontAwesomeIcon icon={faGoogle} />
             </span>
@@ -159,6 +173,7 @@ export default function Login () {
             }
 
         </Button>
+        </OverlayTrigger>
         {loginLocation
         ?
         <Link to="/register" className="register-font mt-3">New user? Register here</Link>

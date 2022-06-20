@@ -12,11 +12,31 @@ enum Category {
     'essentials'
 };
 
+interface Product {
+    id: number,
+    merchant_id: number,
+    description: string,
+    img_src: string,
+    price: string,
+    price_id: string,
+    title: string,
+    categories: string[]
+}
+
 
 
 const getProducts = async (req: Request, res: Response) => {
-
     const results = await productService.getProducts();
+        for (let product of results) {
+        //@ts-ignore
+        let categories = await productService.getProductCategoriesyById(product.id)
+        categories = categories.map((category) => {
+            //@ts-ignore
+            return category.category
+        })
+        //@ts-ignore
+        product.categories = categories
+    }
     return res.status(200).json(results);
 };
 

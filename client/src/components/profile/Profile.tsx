@@ -6,10 +6,8 @@ import UserInfo from "./UserInfo";
 
 export default function Profile () {
     return (
-
         <Container className="mb-0">
             <Details />
-            <UserInfo />
             <Orders />
         </Container>
 

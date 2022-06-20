@@ -1,0 +1,17 @@
+.card {
+    padding: 0.9rem;
+    text-align: center;
+    width: 10%;
+    cursor: pointer;
+}
+
+.card:hover {
+    opacity: 0.1;
+    transition: opacity 0.2s
+}
+
+.card:focus {
+    border-color: aqua;
+    transition: none;
+    opacity: 1;
+}

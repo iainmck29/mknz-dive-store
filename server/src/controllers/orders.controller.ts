@@ -13,6 +13,12 @@ const getOrderById = async (req: Request, res: Response) => {
     return res.status(200).json(result)
 };
 
+const getOrdersByUserID = async (req: Request, res: Response) => {
+    const { userID } = req.body;
+    const result = await orderService.getOrdersByUserID(userID)
+    return res.status(200).json(result);
+}
+
 const createOrder = async (req: Request, res: Response) => {
     const { userID, cartID, cartProducts } = req.body;
     // MAKE SURE NOT RETURNING OBJECT
@@ -26,6 +32,9 @@ const createOrder = async (req: Request, res: Response) => {
     cartProducts.forEach(async (product: any) => {
         await orderService.addProductsToOrder({order_id: orderID, product_id: product.product_id, quantity: product.quantity})
     });
+
+    //DELETE CART
+    cartService.deleteCart(cartID)
 
     return res.status(200).json(orderID);
 };
@@ -48,6 +57,7 @@ const deleteOrder = async (req: Request, res: Response) => {
 export const orders = {
     getOrders,
     getOrderById,
+    getOrdersByUserID,
     createOrder,
     updateStatusInOrder,
     deleteOrder

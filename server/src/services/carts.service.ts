@@ -3,7 +3,7 @@ import { query } from "../models";
 type CartProduct = {
     productID: number,
     quantity: number,
-    cartID: number
+    cartID: string
 };
 
 const getCartById = async (id: string) => {
@@ -48,7 +48,7 @@ const getCartProducts = async (cartID: string) => {
     return rows;
 }
 
-const updateCartTotal = async (total: number, cartID: number) => {
+const updateCartTotal = async (total: number, cartID: string) => {
     const { rows } = await query(`UPDATE cart SET total = $1 WHERE id = $2`, [total, cartID]);
     return rows[0];
 };

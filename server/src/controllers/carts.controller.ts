@@ -15,7 +15,8 @@ const createCart = async (req: Request, res: Response) => {
 };
 
 const addToCart = async (req: Request, res: Response, next: NextFunction) => {
-    const { productID, quantity, cartID } = req.body;
+    const { cartID } = req.params;
+    const { productID, quantity } = req.body;
     const checkCart = await cartService.checkProductInCart(productID, cartID)
     if (checkCart) {
         const result = await cartService.updateCart({productID, quantity, cartID})
@@ -36,7 +37,7 @@ const deleteFromCart = async (req: Request, res: Response, next: NextFunction) =
 }
 
 const updateCartTotal = async (req: Request, res: Response) => {
-    const { cartID } = req.body;
+    const { cartID } = req.params;
     const products = await cartService.getCartProducts(cartID);
     const productData = await getProductData(products);
     //@ts-ignore

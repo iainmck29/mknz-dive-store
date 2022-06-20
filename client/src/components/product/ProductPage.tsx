@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, InputGroup, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import apiAxios from "../../config/axiosConfig";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import { selectCartID, refreshCart } from "../cart/cartSlice";
-import { selectCurrentUser, selectIsLoggedIn } from "../login/userSlice";
+import { selectIsLoggedIn } from "../login/userSlice";
 
 export default function ProductPage () {
     const { id } = useParams();
@@ -33,8 +33,7 @@ export default function ProductPage () {
             return
         }
         try {
-            const response = await apiAxios.post(`/cart/add`, {
-                cartID,
+            const response = await apiAxios.post(`/cart/${cartID}/add`, {
                 productID: product.id,
                 quantity: 1
             })
@@ -55,6 +54,7 @@ export default function ProductPage () {
     useEffect(() => {
         setCurrentProduct();
     }, [])
+
     
     if (product.id === null) {
         return (
@@ -73,8 +73,9 @@ export default function ProductPage () {
                 </Col>
                 <Col>
                     <h2>{product.title}</h2>
-                    <h4>{product.price}</h4>
+                    <h4>£{product.price}</h4>
                     <p className="text-start fs-6">{product.description}</p>
+
                     <Form onSubmit={addToCart}>
                     <Button variant="success" type="submit">Add to Cart</Button>
                     </Form>

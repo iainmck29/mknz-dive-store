@@ -22,6 +22,11 @@ const getOrderById = async (id: string) => {
     return rows;
 };
 
+const getOrdersByUserID = async (userID: string) => {
+    const { rows } = await query(`SELECT * FROM orders WHERE customer_id = $1`, [userID])
+    return rows;
+}
+
 const addOrderToOrders = async (order: Order) => {
     const { userID, total } = order
     const { rows } = await query(`INSERT INTO orders (
@@ -75,6 +80,7 @@ const deleteFromOrdersProducts = async (order_id: string) => {
 export const orderService = {
     getOrders,
     getOrderById,
+    getOrdersByUserID,
     addOrderToOrders,
     addProductsToOrder,
     updatePriceInOrders,

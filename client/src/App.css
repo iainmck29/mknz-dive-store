@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Rubik:wght@300&display=swap');
 .App {
   text-align: center;
 }
@@ -26,6 +27,20 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.font {
+  font-family: "Orbitron";
+}
+
+.fontRub {
+  font-family: "Rubik";
+}
+
+.header {
+  margin: 2rem 0;
+  font-family: "Rubik";
+  font-size: 1.5rem;
 }
 
 @keyframes App-logo-spin {
