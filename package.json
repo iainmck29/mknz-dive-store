@@ -1,0 +1,19 @@
+{
+  "name": "e-commerce_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/src/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iainmck29/mknz-dive-store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iainmck29/mknz-dive-store/issues"
+  },
+  "homepage": "https://github.com/iainmck29/mknz-dive-store#readme"
+}
