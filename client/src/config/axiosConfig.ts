@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const apiAxios = axios.create({
-    baseURL: 'http://localhost:9000/api',
-    // withCredentials: true
+    baseURL: 'https://mknz-dive-store.herokuapp.com/api',
+    withCredentials: true
 })
 
 export default apiAxios

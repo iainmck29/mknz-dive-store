@@ -31,4 +31,4 @@ INSERT INTO merchants (
     'Skunka',
     'Top quality wetsuits',
     'tia@skunka.co.uk'
-)
+);

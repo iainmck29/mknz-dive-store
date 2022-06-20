@@ -11,10 +11,10 @@ import cookieParser from "cookie-parser";
 
 
 const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://mknz-dive-store.herokuapp.com/',
     credentials: true
 }
 
