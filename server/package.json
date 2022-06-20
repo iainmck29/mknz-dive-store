@@ -8,7 +8,7 @@
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p .",
-    "postinstall": "tsc"
+    "postinstall": "npm run build"
   },
   "author": "Iain McKenzie",
   "license": "ISC",
