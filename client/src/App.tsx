@@ -19,7 +19,7 @@ import Protected from './components/ProtectedRoute';
 
 
 //@ts-ignore
-const stripePromise = loadStripe(process.env.STRIPE_TEST_KEY);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_TEST_KEY);
 
 
 
