@@ -31,9 +31,9 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
 
                 res.cookie('A_JWT', token, {
                     maxAge: 1000 * 60 * 60 * 24,
-                    httpOnly: false,
-                    sameSite: 'lax',
-                    secure: false
+                    httpOnly: true,
+                    sameSite: 'none',
+                    secure: true
                 })
                 res.status(200).send(user)
             } 
