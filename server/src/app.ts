@@ -9,13 +9,12 @@ import passport from 'passport';
 import "./config/passport";
 import cookieParser from "cookie-parser";
 
-//working app
 
 const app = express();
 const port = process.env.PORT || 9000;
 
 const corsOptions = {
-    origin: 'https://mknz-dive-store.netlify.app/',
+    origin: '*',
     credentials: true
 }
 
