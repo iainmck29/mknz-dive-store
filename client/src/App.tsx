@@ -1,4 +1,3 @@
-import "dotenv/config";
 import React from 'react';
 import './App.css';
 import {Route, Routes } from "react-router-dom"
@@ -16,10 +15,17 @@ import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import CheckoutSuccess from './components/checkout/CheckoutSuccess';
 import Protected from './components/ProtectedRoute';
+import apiAxios from './config/axiosConfig';
 
+let apiKey;
+
+const getStripeKey = () => {
+  const apiKey = apiAxios.get('/stripe-key');
+  return apiKey
+}
 
 //@ts-ignore
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_TEST_KEY);
+const stripePromise = loadStripe('pk_test_51L3IMqLnUzVHmZYuaddv5e4oK7HY93k6ErSqo0f8UKpYnMK4UvP7p1gILF5zH9dgmyM7lnsEms0QhqmLvCXHn0Q800GcDjpQSG');
 
 
 
