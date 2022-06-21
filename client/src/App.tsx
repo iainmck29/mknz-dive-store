@@ -16,6 +16,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import CheckoutSuccess from './components/checkout/CheckoutSuccess';
 import Protected from './components/ProtectedRoute';
 
+
 //@ts-ignore
 const stripePromise = loadStripe(process.env.STRIPE_TEST_KEY);
 

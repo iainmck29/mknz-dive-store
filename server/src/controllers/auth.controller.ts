@@ -7,7 +7,7 @@ import { userService } from "../services";
 import { hashPassword } from "../utils/helpers";
 
 
-
+// Log in user using passport authenticate mathod
 const loginUser = (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate(
         'local',
