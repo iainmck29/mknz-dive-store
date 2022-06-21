@@ -25,6 +25,7 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
 
                 const body = { id: user.id }
                 const token = jwt.sign({ user: body},
+                    //@ts-ignore
                     process.env.JWT_KEY
                     )
 
