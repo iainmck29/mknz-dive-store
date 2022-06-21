@@ -1,3 +1,4 @@
+import "dotenv/config";
 import React from 'react';
 import './App.css';
 import {Route, Routes } from "react-router-dom"
@@ -19,6 +20,7 @@ import Protected from './components/ProtectedRoute';
 
 //@ts-ignore
 const stripePromise = loadStripe(process.env.STRIPE_TEST_KEY);
+
 
 
 function App() {
