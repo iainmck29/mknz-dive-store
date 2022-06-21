@@ -14,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 const corsOptions = {
-    origin: '*',
+    origin: 'https://mknz-dive-store.netlify.app',
     credentials: true
 }
 
