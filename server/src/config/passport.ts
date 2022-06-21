@@ -3,8 +3,6 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import { userService } from "../services";
 import bcrypt from "bcrypt";
-import { comparePassword } from "../utils/helpers";
-
 
 passport.use(
     new LocalStrategy({

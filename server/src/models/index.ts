@@ -1,9 +1,10 @@
 import { Pool } from 'pg';
-// import { vals } from '../config'
+const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`
+const production = process.env.PRODUCTION
 
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: production ? process.env.DATABASE_URL : connectionString,
     ssl: {  
     rejectUnauthorized: false,
   },

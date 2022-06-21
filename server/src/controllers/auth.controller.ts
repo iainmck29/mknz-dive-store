@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { nextTick } from "process";
 import { userService } from "../services";
 import { hashPassword } from "../utils/helpers";
-const isProduction = process.env.NODE_ENV === 'production'
+
 
 
 const loginUser = (req: Request, res: Response, next: NextFunction) => {
@@ -25,7 +25,6 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
 
                 const body = { id: user.id }
                 const token = jwt.sign({ user: body},
-                    // @ts-ignore
                     process.env.JWT_KEY
                     )
 

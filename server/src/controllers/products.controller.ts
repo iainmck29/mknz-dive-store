@@ -27,7 +27,7 @@ interface Product {
 
 const getProducts = async (req: Request, res: Response) => {
     const results = await productService.getProducts();
-        for (let product of results) {
+        for await (let product of results) {
         //@ts-ignore
         let categories = await productService.getProductCategoriesyById(product.id)
         categories = categories.map((category) => {

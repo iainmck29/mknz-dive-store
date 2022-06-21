@@ -13,8 +13,11 @@ import cookieParser from "cookie-parser";
 const app = express();
 const port = process.env.PORT || 9000;
 
+const production = process.env.PRODUCTION
+
+
 const corsOptions = {
-    origin: 'https://mknz-dive-store.netlify.app',
+    origin: production ? 'https://mknz-dive-store.netlify.app' : 'http://localhost:3000',
     credentials: true
 }
 

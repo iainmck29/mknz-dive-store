@@ -15,7 +15,6 @@ import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import CheckoutSuccess from './components/checkout/CheckoutSuccess';
 import Protected from './components/ProtectedRoute';
-import Footer from './components/footer/Footer';
 
 //@ts-ignore
 const stripePromise = loadStripe(process.env.STRIPE_TEST_KEY);
@@ -51,8 +50,6 @@ function App() {
         <Route path="/checkout/:orderID/success" element={<CheckoutSuccess />} />
       </Routes>
       </Elements>
-      {/* <div className="or-seperator mb-3"></div> */}
-      {/* <Footer /> */}
     </div>
   );
 }
