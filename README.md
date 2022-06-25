@@ -1,12 +1,12 @@
 # MKNZ Dive Store 🤿
-A working e-commerce web app for scuba diving equipment.
-
+A working e-commerce web app for scuba diving equipment. 
+<img align="right" src="https://media.giphy.com/media/j0MwZfgdTDYfz1MGWN/giphy.gif">
 Live Site: https://mknz-dive-store.netlify.app/
 
 ## About This Project
 - This project is built using the PERN stack (PostgresQL, Express, React & Node).
 - Utilises Typescript over vanilla JS to improve development and deliver a more robust application.
-- The Node/Express back-end is built as a RESTful API which is consumed by the decoupled React front-end.
+- The Node/Express back-end is built as a RESTful API which is consumed by the decoupled React front-end. 
 - PassportJS is used as the authentication library and currently supports the use of JWT's as the authentication method. This will be extended to support Google authentication eventually.
 - Stripe API handles payment authorisation. Stripe provides an excellent and easy to understand platform for payment handling which made this the obvious choice.
 - React Bootstrap is used for styling. Creating an advanced UI was beyond the scope of this project therefore utilising this library sped up development.
