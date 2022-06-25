@@ -27,13 +27,31 @@ This app is free to use by whoever would care to do so however some set up will 
 
 ## Screenshots
 
-## Database Schema
+### Home
+<img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1656178901/dive_store_samples/Screenshot_2022-06-25_at_18.31.50_uvdmfb.png" width="1000">
+
+### Single Product
+<img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1656178896/dive_store_samples/Screenshot_2022-06-25_at_18.33.49_jv0q4c.png" width="1000">
+
+### User Profile
+<img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1656178896/dive_store_samples/Screenshot_2022-06-25_at_18.33.29_vtg6hq.png" width="1000">
+
+### Checkout
+<img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1656178896/dive_store_samples/Screenshot_2022-06-25_at_18.34.56_imaaaq.png" width="1000">
+
+### Log In
+<img src="https://res.cloudinary.com/dpvyfov2o/image/upload/v1656178896/dive_store_samples/Screenshot_2022-06-25_at_18.35.18_iij4pf.png" width="1000">
+
 
 ## Endpoints
 
-
+You can find all the endpoints and their descriptions in the Swagger file (...coming soon).
 
 
 
 ## To Do's
-...
+- Add comments through project
+- Some Typescript types need editing
+- Error handling
+- Revise current user data
+- Refactor
