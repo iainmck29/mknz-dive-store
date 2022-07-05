@@ -21,7 +21,7 @@ const getOrdersByUserID = async (req: Request, res: Response) => {
 
 const createOrder = async (req: Request, res: Response) => {
     const { userID, cartID, cartProducts } = req.body;
-    // MAKE SURE NOT RETURNING OBJECT
+
     const total = await cartService.getCartTotal(cartID)
 
     //@ts-ignore

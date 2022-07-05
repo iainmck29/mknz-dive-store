@@ -11,9 +11,6 @@ const getCurrentUser = async (req: Request, res: Response, next: NextFunction) =
     //@ts-ignore    
     const id = req.user.id
     if (id) {
-        // if (id !== req.params.id) {
-        //     res.status(401).send('You are not authorised to view that profile')
-        // }
         const result = await userService.getCurrentUser(id);
         res.status(200).json(result)
         next();

@@ -56,11 +56,9 @@ const getCartTotal = async (req: Request, res: Response) => {
 
 const updateCart = async(req: Request, res: Response) => {
     const { products, cartID } = req.body;
-    // for await (const product of products) {
         // @ts-ignore
         const { productID, quantity } = product
         const result = await cartService.updateCart({productID, quantity, cartID});
-    // }
 
     return res.status(200).json(result);
 };

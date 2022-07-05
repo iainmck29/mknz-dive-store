@@ -15,12 +15,12 @@ interface ProductData {
     price_id: string
 }
 
-type product = {
+type Product = {
     product_id: number,
     quantity: number
 }
 
-export default function CartItem (props: product) {
+export default function CartItem (props: Product) {
     const [product, setProduct] = useState({
         id: 0,
         merchant_id: 0,
